@@ -22,24 +22,22 @@
         <el-footer>
             <p>本站提供的内容均来源于网络,纯属共享学习之用,若有侵权,请与管理员邮箱联系！</p>
         </el-footer>
-        <BackTop :defaultProps="60" :date="1000" color="#000"></BackTop>
+        <el-backtop></el-backtop>
     </el-container>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { Searchauto, Searchhotwords } from '@/axios/api';
-import BackTop from 'vue-backtop';
 
 @Component({
-    name: 'HeaderView',
-    components: { BackTop }
+    name: 'HeaderView'
 })
 export default class HeaderView extends Vue {
     private activeIndex = '/category/male';
     private query = '';
-    private hotwords = [];
-    private restaurants = [];
+    private hotwords: any;
+    private restaurants: any;
     private timeout: number | undefined;
 
     // 获取搜索热词
@@ -86,7 +84,7 @@ export default class HeaderView extends Vue {
 
     // 模糊搜索
     querySelect (item: any) {
-        if (item.value === '暂无数据' || item.value == '') {
+        if (item.value === '暂无数据' || item.value === '') {
             this.query = '';
             return;
         }

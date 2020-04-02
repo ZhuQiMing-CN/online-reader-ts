@@ -11,8 +11,8 @@ module.exports = {
         https: false,
         hot: true,
         overlay: {
-            warnings: false,
-            errors: false
+            // warnings: false,
+            // errors: false
         },
         proxy: {
             '/api': {
