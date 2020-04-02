@@ -14,9 +14,9 @@ import { Component, Vue } from 'vue-property-decorator';
 })
 export default class About extends Vue {
     // data
-    info = '';
-    firstName = 'Li';
-    lastName = 'Lei'
+    private info = '';
+    private firstName = 'Li';
+    private lastName = 'Lei'
 
     // computed
     get fullName (): string {
@@ -24,12 +24,12 @@ export default class About extends Vue {
     }
 
     // methods
-    setInfo (): void {
+    private setInfo (): void {
         this.info = '我是info';
     }
 
-    mounted () {
-        console.log('hello');
+    mounted (): void {
+        // console.log('hello');
     }
 }
 </script>
