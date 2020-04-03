@@ -63,7 +63,7 @@ export default class Rmale extends Vue {
     private booksData = []
 
     // 获取排行榜类型
-    getRanklist () {
+    private getRanklist () {
         Rankcategory().then(res => {
             if (res.ok === true) {
                 this.rankList = res.male;
@@ -74,7 +74,7 @@ export default class Rmale extends Vue {
     }
 
     // 根据排行榜获取小说列表
-    changeRank (item: any) {
+    private changeRank (item: any) {
         this.rankId = item._id;
         this.typeList = item;
         this.defaultType = '';
@@ -82,13 +82,13 @@ export default class Rmale extends Vue {
     }
 
     // 根据更多筛选获取小说列表
-    changeType (item: string) {
+    private changeType (item: string) {
         this.rankId = item;
         this.getRanklistbook();
     }
 
     // 获取排行榜小说
-    getRanklistbook () {
+    private getRanklistbook () {
         let parmas = this.rankId;
         Ranklistbook(parmas).then(res => {
             if (res.ok === true) {
@@ -98,7 +98,7 @@ export default class Rmale extends Vue {
     }
 
     // 获取小说信息
-    getBookinfo (item: any) {
+    private getBookinfo (item: any) {
         this.$router.push('/bookinfo/' + item._id);
     }
 
@@ -108,51 +108,7 @@ export default class Rmale extends Vue {
 }
 </script>
 <style lang="scss" scoped>
+    @import '../ranking.scss';
     #rmale {
-        .booklist {
-            padding: 10px;
-            font-size: 14px;
-        }
-
-        .img {
-            float: left;
-            width: 90px;
-            height: 120px;
-            border: 1px solid #ebebeb;
-            box-shadow: 2px 4px 6px #bbb;
-        }
-
-        .right {
-            height: 120px;
-            margin-left: 105px;
-        }
-
-        .right p {
-            margin: 0px;
-            text-align: left;
-        }
-
-        .name {
-            height: 22px;
-            line-height: 22px;
-            font-weight: 700;
-        }
-
-        .author {
-            height: 28px;
-            line-height: 28px;
-        }
-
-        .desc {
-            height: 40px;
-            text-overflow: ellipsis;
-            overflow: hidden
-        }
-
-        .popularity {
-            height: 28px;
-            line-height: 28px;
-            margin-top: 10px !important
-        }
     }
 </style>

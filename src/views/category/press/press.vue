@@ -157,51 +157,7 @@ export default class Press extends Vue {
 }
 </script>
 <style lang="scss" scoped>
+    @import '../category.scss';
     #press {
-        .booklist {
-            padding: 10px;
-            font-size: 14px;
-        }
-
-        .img {
-            float: left;
-            width: 90px;
-            height: 120px;
-            border: 1px solid #ebebeb;
-            box-shadow: 2px 4px 6px #bbb;
-        }
-
-        .right {
-            height: 120px;
-            margin-left: 105px;
-        }
-
-        .right p {
-            margin: 0px;
-            text-align: left;
-        }
-
-        .name {
-            height: 22px;
-            line-height: 22px;
-            font-weight: 700;
-        }
-
-        .author {
-            height: 28px;
-            line-height: 28px;
-        }
-
-        .desc {
-            height: 40px;
-            text-overflow: ellipsis;
-            overflow: hidden
-        }
-
-        .popularity {
-            height: 28px;
-            line-height: 28px;
-            margin-top: 10px !important
-        }
     }
 </style>
