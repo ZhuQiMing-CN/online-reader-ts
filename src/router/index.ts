@@ -70,6 +70,13 @@ const routes = [
         children: [
             { path: '/', name: 'bookshelf', component: () => import('@/views/bookshelf/bookshelf.vue') }
         ]
+    },
+    {
+        path: '/search',
+        component: MainView,
+        children: [
+            { path: '/', name: 'search', component: () => import('@/views/search/search.vue') }
+        ]
     }
 ];
 

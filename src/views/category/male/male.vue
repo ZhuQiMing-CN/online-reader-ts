@@ -26,8 +26,7 @@
         <el-row>
             <el-col :span="12" v-for="item in booksData" class="booklist" :key="item.id">
                 <div>
-                    <img :src="'http://statics.zhuishushenqi.com' + item.cover" :alt="item.title" class="img cursor"
-                         @click="getBookinfo(item)">
+                    <img :src="'http://statics.zhuishushenqi.com' + item.cover" :alt="item.title" class="img cursor" @click="getBookinfo(item)">
                     <div class="right">
                         <p class="name cursor" @click="getBookinfo(item)">{{item.title}}</p>
                         <p class="author">{{item.author + " | " + item.majorCate}}</p>
@@ -51,7 +50,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import { Categorylist, Categorylistbook } from '@/axios/api';
 
 @Component({
-    name: 'male'
+    name: 'Male'
 })
 export default class Male extends Vue {
     private majorList = [];
@@ -132,13 +131,13 @@ export default class Male extends Vue {
     }
 
     // 分页每页显示
-    private maleSizeChange (val: any) {
+    private maleSizeChange (val: number) {
         this.limit = val;
         this.getCategorylistbook();
     }
 
     // 分页跳转页数
-    private maleCurrentChange (val: any) {
+    private maleCurrentChange (val: number) {
         this.start = val - 1;
         this.getCategorylistbook();
         document.body.scrollTop = 0;
