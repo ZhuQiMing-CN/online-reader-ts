@@ -34,7 +34,7 @@ export default class HeaderView extends Vue {
     private timeout: number | undefined;
 
     // 获取搜索热词
-    getHotwords (): void {
+    private getHotwords (): void {
         Searchhotwords().then(res => {
             if (res.ok === true) {
                 this.hotwords = res.searchHotWords;
@@ -42,7 +42,7 @@ export default class HeaderView extends Vue {
         });
     }
 
-    querySearch (queryString: string, cb: any) {
+    private querySearch (queryString: string, cb: any) {
         interface Results {
             [propName: string]: any;
         }
@@ -79,7 +79,7 @@ export default class HeaderView extends Vue {
     }
 
     // 模糊搜索
-    querySelect (item: any) {
+    private querySelect (item: any) {
         if (item.value === '暂无数据' || item.value === '') {
             this.query = '';
             return;

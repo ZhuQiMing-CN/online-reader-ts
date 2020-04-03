@@ -116,7 +116,7 @@ export default class BookInfo extends Vue {
     private sourcesData = [];
 
     // 获取小说信息
-    getBookinfo (): void {
+    private getBookinfo (): void {
         let parmas = this.bookId;
         Bookinfo(parmas).then(res => {
             this.bookLink = res;
@@ -125,7 +125,7 @@ export default class BookInfo extends Vue {
     }
 
     // 获取小说正版源于盗版源(混合)
-    getBookSources () {
+    private getBookSources () {
         let bookShelfs = this.$store.state.bookShelf;
         this.mybookData = bookShelfs.filter((item: any) => item.id === this.$route.params.bookId);
         let parmas = {
@@ -160,7 +160,7 @@ export default class BookInfo extends Vue {
     }
 
     // 点击小说章节阅读
-    chapterMatter (item: any): void {
+    private chapterMatter (item: any): void {
         let bookShelfs = this.$store.state.bookShelf;
         if (bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId) === -1) {
             let readRecord = {
@@ -186,7 +186,7 @@ export default class BookInfo extends Vue {
     }
 
     // 加入书架
-    addBooks (): void {
+    private addBooks (): void {
         let bookShelfs = this.$store.state.bookShelf;
         if (bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId) === -1) {
             let readRecord = {
@@ -216,7 +216,7 @@ export default class BookInfo extends Vue {
     }
 
     // 开始阅读
-    readBooks (): void {
+    private readBooks (): void {
         let bookShelfs = this.$store.state.bookShelf;
         if (bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId) === -1) {
             let readRecord = {
@@ -237,7 +237,7 @@ export default class BookInfo extends Vue {
     }
 
     // 选择其他的小说源
-    changeSources (item: any): void {
+    private changeSources (item: any): void {
         this.sourceId = item._id;
         this.sourceName = item.name;
         this.lastChapter = item.lastChapter;
@@ -245,12 +245,12 @@ export default class BookInfo extends Vue {
     }
 
     // 确定选择小说源
-    affirmSources (): void {
+    private affirmSources (): void {
         this.dialogSources = false;
         this.getCatalog();
         // 书架状态管理
         let bookShelfs = this.$store.state.bookShelf;
-        if (bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId) == "-1") {
+        if (bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId) === -1) {
             let readRecord = {
                 id: this.bookLink._id,
                 title: this.bookLink.title,

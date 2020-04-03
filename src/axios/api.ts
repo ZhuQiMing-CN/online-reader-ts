@@ -18,8 +18,8 @@ export const Categorylistbook = (params: any) => {
     return axios.get('/api/book/by-categories', {params: params}).then(res => res.data);
 };
 // 获取排行榜类型
-export const Rankcategory = (params: any) => {
-    return axios.get('/api/ranking/gender', {params: params}).then(res => res.data);
+export const Rankcategory = () => {
+    return axios.get('/api/ranking/gender').then(res => res.data);
 };
 // 获取排行榜小说
 export const Ranklistbook = (params: any) => {

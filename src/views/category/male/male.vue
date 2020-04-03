@@ -90,26 +90,26 @@ export default class Male extends Vue {
     private maleCurrentPage = 1;
 
     // 获取小类别下的分类
-    changeMajor (item: any): void {
+    private changeMajor (item: any): void {
         this.minsList = item.mins;
         this.defaultMins = item.mins[0];
         this.getCategorylistbook();
     }
 
     // 根据小分类获取小说列表
-    changeMins (item: any) {
+    private changeMins (item: any) {
         this.defaultMins = item;
         this.getCategorylistbook();
     }
 
     // 根据更多筛选获取小说列表
-    changeType (item: any) {
+    private changeType (item: any) {
         this.defaultType.label = item.label;
         this.getCategorylistbook();
     }
 
     // 根据分类获取小说列表
-    getCategorylistbook (): void {
+    private getCategorylistbook (): void {
         let parmas = {
             gender: this.bookgender,
             type: this.defaultType.label,
@@ -127,18 +127,18 @@ export default class Male extends Vue {
     }
 
     // 获取小说信息
-    getBookinfo (item: any) {
+    private getBookinfo (item: any) {
         this.$router.push('/bookinfo/' + item._id);
     }
 
     // 分页每页显示
-    maleSizeChange (val: any) {
+    private maleSizeChange (val: any) {
         this.limit = val;
         this.getCategorylistbook();
     }
 
     // 分页跳转页数
-    maleCurrentChange (val: any) {
+    private maleCurrentChange (val: any) {
         this.start = val - 1;
         this.getCategorylistbook();
         document.body.scrollTop = 0;

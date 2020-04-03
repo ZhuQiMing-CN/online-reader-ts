@@ -39,7 +39,7 @@ interface BookData {
 }
 
 @Component({
-    name: 'Bookchapter'
+    name: 'BookChapter'
 })
 export default class BookChapter extends Vue {
     private bookId = '';
@@ -51,7 +51,7 @@ export default class BookChapter extends Vue {
     private imagesData = [];
 
     // 获取小说目录列表
-    getBookSources () {
+    private getBookSources () {
         let bookShelfs = this.$store.state.bookShelf;
         this.bookId = this.$route.params.bookId;
         this.mybookData = bookShelfs.filter((item: any) => item.id === this.$route.params.bookId);
@@ -59,7 +59,7 @@ export default class BookChapter extends Vue {
         let parmas = this.mybookData[0].sourceId;
         Bookcatalog(parmas).then(res => {
             this.chaptersData = res.chapters;
-            if (this.mybookData[0].readlink == '') {
+            if (this.mybookData[0].readlink === '') {
                 this.mybookData[0].readlink = res.chapters[0].link;
             }
             let parmas = this.mybookData[0].readlink;
@@ -86,7 +86,7 @@ export default class BookChapter extends Vue {
     }
 
     // 下一章小说
-    nextChapter () {
+    private nextChapter () {
         let bookShelfs = this.$store.state.bookShelf;
         if (this.chapterIndex >= this.chaptersData.length - 1) {
             this.$message({
@@ -115,7 +115,7 @@ export default class BookChapter extends Vue {
                 if (res.chapter.images) {
                     this.imagesData = res.chapter.images.split(',');
                 }
-                if (bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId) != '-1') {
+                if (bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId) !== -1) {
                     bookShelfs[bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId)].readlink = parmas;
                     bookShelfs[bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId)].readtitle = this.bookData.title;
                     this.$store.commit('setBookShelf', bookShelfs);
@@ -125,7 +125,7 @@ export default class BookChapter extends Vue {
     }
 
     // 上一章小说
-    backChapter () {
+    private backChapter () {
         let bookShelfs = this.$store.state.bookShelf;
         if (this.chapterIndex < 1) {
             this.$message({
@@ -154,7 +154,7 @@ export default class BookChapter extends Vue {
                 if (res.chapter.images) {
                     this.imagesData = res.chapter.images.split(',');
                 }
-                if (bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId) != '-1') {
+                if (bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId) !== -1) {
                     bookShelfs[bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId)].readlink = parmas;
                     bookShelfs[bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId)].readtitle = this.bookData.title;
                     this.$store.commit('setBookShelf', bookShelfs);
@@ -164,7 +164,7 @@ export default class BookChapter extends Vue {
     }
 
     // 返回章节列表
-    backBookinfo () {
+    private backBookinfo () {
         this.$router.push('/bookinfo/' + this.bookId);
     }
 
