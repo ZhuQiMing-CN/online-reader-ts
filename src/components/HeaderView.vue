@@ -3,27 +3,20 @@
  * @CreateTime: 2020/4/1 21:24
  -->
 <template>
-    <el-container>
-        <el-header>
-            <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" router
-                     background-color="#545c64"
-                     text-color="#fff" active-text-color="#ffd04b">
-                <div class="logo">This is a Logo</div>
-                <el-menu-item index="/index">首页</el-menu-item>
-                <el-menu-item index="/category/male">热门分类</el-menu-item>
-                <el-menu-item index="/ranking/rmale">排行榜</el-menu-item>
-                <el-menu-item index="/bookshelf">我的书架</el-menu-item>
-                <el-autocomplete v-model="query" :fetch-suggestions="querySearch" placeholder="请输入书本名或者作者名" @select="querySelect" @keyup.enter.native="querySelect({value:query})" size="small" clearable class="input-with-select">
-                    <el-button slot="append" icon="el-icon-search" @click="querySelect({value:query})"></el-button>
-                </el-autocomplete>
-            </el-menu>
-        </el-header>
-        <router-view></router-view>
-        <el-footer>
-            <p>本站提供的内容均来源于网络,纯属共享学习之用,若有侵权,请与管理员邮箱联系！</p>
-        </el-footer>
-        <el-backtop></el-backtop>
-    </el-container>
+    <el-header>
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" router
+                 background-color="#545c64"
+                 text-color="#fff" active-text-color="#ffd04b">
+            <div class="logo">This is a Logo</div>
+            <el-menu-item index="/index">首页</el-menu-item>
+            <el-menu-item index="/category/male">热门分类</el-menu-item>
+            <el-menu-item index="/ranking/rmale">排行榜</el-menu-item>
+            <el-menu-item index="/bookshelf">我的书架</el-menu-item>
+            <el-autocomplete v-model="query" :fetch-suggestions="querySearch" placeholder="请输入书本名或者作者名" @select="querySelect" @keyup.enter.native="querySelect({value:query})" size="small" clearable class="input-with-select">
+                <el-button slot="append" icon="el-icon-search" @click="querySelect({value:query})"></el-button>
+            </el-autocomplete>
+        </el-menu>
+    </el-header>
 </template>
 
 <script lang="ts">
@@ -50,7 +43,10 @@ export default class HeaderView extends Vue {
     }
 
     querySearch (queryString: string, cb: any) {
-        let results: any;
+        interface Results {
+            [propName: string]: any;
+        }
+        let results: Results = [];
         if (this.query === '') {
             this.restaurants = this.hotwords;
             for (let i of this.restaurants) {

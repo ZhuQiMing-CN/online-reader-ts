@@ -3,10 +3,16 @@
  * @CreateTime: 2020/4/1 16:57
  -->
 <template>
-    <div id="MainView">
+    <el-container>
         <header-view></header-view>
-        <router-view></router-view>
-    </div>
+        <el-main>
+            <router-view></router-view>
+        </el-main>
+        <el-footer>
+            <p>本站提供的内容均来源于网络,纯属共享学习之用,若有侵权,请与管理员邮箱联系！</p>
+        </el-footer>
+        <el-backtop></el-backtop>
+    </el-container>
 </template>
 
 <script lang="ts">

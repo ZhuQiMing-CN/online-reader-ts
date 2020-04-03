@@ -36,7 +36,15 @@ const routes = [
         name: 'bookinfo',
         component: MainView,
         children: [
-            { path: ':bookId', component: () => import('@/views/bookinfo/bookinfo.vue')}
+            { path: ':bookId', component: () => import('@/views/bookinfo/bookinfo.vue') }
+        ]
+    },
+    {
+        path: '/bookchapter',
+        name: 'bookchapter',
+        component: MainView,
+        children: [
+            { path: ':bookId', component: () => import('@/views/bookchapter/bookchapter.vue') }
         ]
     }
 ];

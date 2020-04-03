@@ -11,7 +11,7 @@
                             @change="changeMajor(item)" :key="item.id">
                 <el-radio-button :label="item.major"></el-radio-button>
             </el-radio-group>
-            <p v-show="minsList.length !== 0"><i></i>具体类型</p>
+            <p v-if="minsList.length !== 0"><i></i>具体类型</p>
             <el-radio-group v-for="item in minsList" size="mini" v-model="defaultMins" class="p5"
                             @change="changeMins(item)" :key="item.id">
                 <el-radio-button :label="item"></el-radio-button>
@@ -41,9 +41,7 @@
             </el-col>
         </el-row>
         <hr>
-        <el-pagination @size-change="maleSizeChange" @current-change="maleCurrentChange" :current-page="maleCurrentPage"
-                       :page-sizes="[10, 20, 30, 40, 50]" :page-size="limit"
-                       layout="total, sizes, prev, pager, next, jumper" :total="totalData">
+        <el-pagination @size-change="maleSizeChange" @current-change="maleCurrentChange" :current-page="maleCurrentPage" :page-sizes="[10, 20, 30, 40, 50]" :page-size="limit" layout="total, sizes, prev, pager, next, jumper" :total="totalData">
         </el-pagination>
     </div>
 </template>

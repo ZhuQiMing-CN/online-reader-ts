@@ -49,7 +49,7 @@
         <div class="infoCon mt10">
             <p class="catalog-p">目录<span class="text-danger">（红色字体的为VIP章节）</span></p>
             <div class="p10">
-                <li class="chapter-li" v-for="item in catalogList" @click="chapterMatter(item)">
+                <li class="chapter-li" v-for="(item, key) in catalogList" @click="chapterMatter(item)" :key="key">
                     <span :class="{'text-danger':item.isVip}">{{item.title}}</span>
                     <!--<el-badge value="vip" class="item" :hidden="item.isVip == false">
                         {{item.title}}
@@ -77,7 +77,7 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button size="small" @click="dialogSources = false">取 消</el-button>
-                <el-button size="small" type="primary" @click="dialogSources = false;affirmSources('formSources')">确 定
+                <el-button size="small" type="primary" @click="affirmSources()">确 定
                 </el-button>
             </div>
         </el-dialog>
@@ -88,26 +88,41 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Bookinfo, Bookcatalog, Booksources } from '@/axios/api';
 
+interface BookLink {
+    [propName: string]: any;
+}
+interface CatalogList {
+    [propName: string]: any;
+}
+
 @Component({
     name: 'Bookinfo'
 })
-export default class Booksinfo extends Vue {
-    private bookId = ''
-    private mybookData = []
-    private bookLink = []
-    private catalogList = []
-    private sourceId = ''
-    private sourceName = ''
-    private lastChapter = ''
-    private staticsLink = ''
-    private dialogSources = false
+export default class BookInfo extends Vue {
+    private bookId = '';
+    private mybookData: any;
+    private bookLink: BookLink = [];
+    private catalogList: CatalogList = [];
+    private sourceId = '';
+    private sourceName = '';
+    private lastChapter = '';
+    private staticsLink = '';
+    private dialogSources = false;
     private formSources = {
         sources: '',
         lastChapter: ''
-    }
+    };
 
-    private sourcesData = []
-    private formSourcesData = []
+    private sourcesData = [];
+
+    // 获取小说信息
+    getBookinfo (): void {
+        let parmas = this.bookId;
+        Bookinfo(parmas).then(res => {
+            this.bookLink = res;
+            this.staticsLink = "http://statics.zhuishushenqi.com" + res.cover;
+        });
+    }
 
     // 获取小说正版源于盗版源(混合)
     getBookSources () {
@@ -118,7 +133,7 @@ export default class Booksinfo extends Vue {
             book: this.bookId
         };
         Booksources(parmas).then(res => {
-            if (bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId) === '-1') {
+            if (bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId) === -1) {
                 this.sourceId = res[0]._id;
                 this.sourceName = res[0].name;
                 this.formSources.sources = res[0].name;
@@ -132,18 +147,136 @@ export default class Booksinfo extends Vue {
                 this.formSources.lastChapter = this.mybookData[0].lastChapter;
             }
             this.sourcesData = res;
-            // this.getCatalog();
+            this.getCatalog();
         });
+    }
+
+    // 获取小说章节(根据小说源id)
+    private getCatalog (): void {
+        let parmas = this.sourceId;
+        Bookcatalog(parmas).then(res => {
+            this.catalogList = res.chapters;
+        });
+    }
+
+    // 点击小说章节阅读
+    chapterMatter (item: any): void {
+        let bookShelfs = this.$store.state.bookShelf;
+        if (bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId) === -1) {
+            let readRecord = {
+                id: this.bookLink._id,
+                title: this.bookLink.title,
+                cover: this.bookLink.cover,
+                author: this.bookLink.author,
+                readlink: item.link,
+                readtitle: item.title,
+                sourceId: this.sourceId,
+                readsource: this.sourceName,
+                lastChapter: this.lastChapter
+            };
+            bookShelfs.push(readRecord);
+            this.$store.commit('setBookShelf', bookShelfs);
+        } else {
+            bookShelfs[bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId)].sourceId = this.sourceId;
+            bookShelfs[bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId)].readlink = item.link;
+            bookShelfs[bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId)].readtitle = item.title;
+            this.$store.commit('setBookShelf', bookShelfs);
+        }
+        this.$router.push("/bookchapter/" + this.bookId);
+    }
+
+    // 加入书架
+    addBooks (): void {
+        let bookShelfs = this.$store.state.bookShelf;
+        if (bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId) === -1) {
+            let readRecord = {
+                id: this.bookLink._id,
+                title: this.bookLink.title,
+                cover: this.bookLink.cover,
+                author: this.bookLink.author,
+                readlink: this.catalogList[0].link,
+                readtitle: this.catalogList[0].title,
+                sourceId: this.sourceId,
+                readsource: this.sourceName,
+                lastChapter: this.lastChapter
+            };
+            bookShelfs.push(readRecord);
+            this.$store.commit('setBookShelf', bookShelfs);
+        } else {
+            bookShelfs[bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId)].sourceId = this.sourceId;
+            bookShelfs[bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId)].readsource = this.sourceName;
+            bookShelfs[bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId)].lastChapter = this.lastChapter;
+            this.$store.commit('setBookShelf', bookShelfs);
+            this.$message({
+                message: "此本书已经加入书架咯~",
+                type: "warning",
+                duration: 1000
+            });
+        }
+    }
+
+    // 开始阅读
+    readBooks (): void {
+        let bookShelfs = this.$store.state.bookShelf;
+        if (bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId) === -1) {
+            let readRecord = {
+                id: this.bookLink._id,
+                title: this.bookLink.title,
+                cover: this.bookLink.cover,
+                author: this.bookLink.author,
+                readlink: this.catalogList[0].link,
+                readtitle: this.catalogList[0].title,
+                sourceId: this.sourceId,
+                readsource: this.sourceName,
+                lastChapter: this.lastChapter
+            };
+            bookShelfs.push(readRecord);
+            this.$store.commit('setBookShelf', bookShelfs);
+        }
+        this.$router.push("/bookchapter/" + this.bookId);
+    }
+
+    // 选择其他的小说源
+    changeSources (item: any): void {
+        this.sourceId = item._id;
+        this.sourceName = item.name;
+        this.lastChapter = item.lastChapter;
+        this.formSources.lastChapter = item.lastChapter;
+    }
+
+    // 确定选择小说源
+    affirmSources (): void {
+        this.dialogSources = false;
+        this.getCatalog();
+        // 书架状态管理
+        let bookShelfs = this.$store.state.bookShelf;
+        if (bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId) == "-1") {
+            let readRecord = {
+                id: this.bookLink._id,
+                title: this.bookLink.title,
+                cover: this.bookLink.cover,
+                author: this.bookLink.author,
+                readlink: this.catalogList[0].link,
+                readtitle: this.catalogList[0].title,
+                sourceId: this.sourceId,
+                readsource: this.sourceName,
+                lastChapter: this.lastChapter
+            };
+            bookShelfs.push(readRecord);
+            this.$store.commit('setBookShelf', bookShelfs);
+        } else {
+            bookShelfs[bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId)].sourceId = this.sourceId;
+            bookShelfs[bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId)].readsource = this.sourceName;
+            bookShelfs[bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId)].lastChapter = this.lastChapter;
+            bookShelfs[bookShelfs.findIndex((item: any) => item.id === this.$route.params.bookId)].readlink = "";
+            this.$store.commit('setBookShelf', bookShelfs);
+        }
     }
 
     mounted (): void {
         this.bookId = this.$route.params.bookId;
-        // 获取小说信息
-        let parmas: string = this.bookId;
-        Bookinfo(parmas).then(res => {
-            this.bookLink = res;
-            this.staticsLink = 'http://statics.zhuishushenqi.com' + res.cover;
-        });
+        this.getBookinfo();
+        this.getBookSources();
     }
 }
 </script>
