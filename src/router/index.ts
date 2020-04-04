@@ -6,10 +6,10 @@ Vue.use(VueRouter);
 
 const routes = [
     {
-        path: '/about',
+        path: '/index',
         component: MainView,
         children: [
-            { path: '/', name: 'About', component: () => import('@/views/About.vue') }
+            { path: '/', name: 'index', component: () => import('@/views/index.vue') }
         ]
     },
     {
@@ -77,6 +77,10 @@ const routes = [
         children: [
             { path: '/', name: 'search', component: () => import('@/views/search/search.vue') }
         ]
+    },
+    {
+        path: '*',
+        redirect: '/index'
     }
 ];
 

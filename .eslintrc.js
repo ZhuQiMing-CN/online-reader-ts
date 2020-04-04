@@ -33,6 +33,7 @@ module.exports = {
       // 命名检测
       'id-match': 2,
       // 要求使用 const 声明
-      'prefer-const': 0
+      'prefer-const': 0,
+      '@typescript-eslint/no-explicit-any': 'off'
   }
 }

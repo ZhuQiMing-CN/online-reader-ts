@@ -42,7 +42,7 @@ export default class HeaderView extends Vue {
         });
     }
 
-    private querySearch (queryString: string, cb: any) {
+    private querySearch (queryString: string, cb: any): void {
         interface Results {
             [propName: string]: any;
         }
@@ -79,7 +79,7 @@ export default class HeaderView extends Vue {
     }
 
     // 模糊搜索
-    private querySelect (item: any) {
+    private querySelect (item: any): void {
         if (item.value === '暂无数据' || item.value === '') {
             this.query = '';
             return;
@@ -95,7 +95,7 @@ export default class HeaderView extends Vue {
 </script>
 <style lang="scss" scoped>
     .logo {
-        width: 120px;
+        width: 180px;
         height: 60px;
         line-height: 60px;
         float: left;
