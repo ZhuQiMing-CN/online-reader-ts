@@ -1,6 +1,6 @@
-## [![vue](https://img.shields.io/badge/vue-2.6.11-brightgreen.svg)](https://github.com/vuejs/vue)[![typeScript](https://img.shields.io/badge/typescript-3.7.5-brightgreen.svg)](https://github.com/Microsoft/TypeScript)[![element-ui](https://img.shields.io/badge/element--ui-2.13.0-brightgreen.svg)](https://github.com/ElemeFE/element)[![MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+## [![vue](https://img.shields.io/badge/vue-2.6.11-brightgreen.svg)](https://github.com/vuejs/vue) [![typeScript](https://img.shields.io/badge/typescript-3.7.5-brightgreen.svg)](https://github.com/Microsoft/TypeScript) [![element-ui](https://img.shields.io/badge/element--ui-2.13.0-brightgreen.svg)](https://github.com/ElemeFE/element) [![MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-本项目是根据我的另外一个项目 [online-reader](https://github.com/ZhuQiMing-CN/online-reader) 改造完成，具体的页面效果没有很大的变动。
+本项目是根据我的另外一个项目 [online-reader](https://github.com/ZhuQiMing-CN/online-reader) 改造完成，具体的页面效果没有很大的变动，只是想练习一下 typescript 的语法。
 
 ## online-reader-ts
 本项目是基于 vue cli3+typescript+vue-router+vuex+element-ui，主要实现了小说排行榜、小说分类、小说详情、小说阅读、搜索页面、小说阅读记录等页面，基本上达到了可用来看小说的需求。
